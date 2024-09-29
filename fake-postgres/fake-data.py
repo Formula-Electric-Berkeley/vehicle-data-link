@@ -4,6 +4,8 @@ from faker import Faker
 import random
 from datetime import datetime, timedelta
 
+
+#this is a test for github
 # Connect to your PostgreSQL database
 conn = psycopg2.connect(
     dbname="telemetrydb",
