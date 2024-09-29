@@ -10,4 +10,4 @@ node_modules/
 # Ignore build directories
 build/
 dist/
-grafana-v11.2.0/
+grafana-v11.2.0/grafana-v11.2.0/bin/grafana
