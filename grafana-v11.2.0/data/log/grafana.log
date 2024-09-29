@@ -1509,3 +1509,188 @@ logger=provisioning.dashboard t=2024-09-15T13:37:24.390711-07:00 level=warn msg=
 logger=provisioning.dashboard t=2024-09-15T13:37:24.390757-07:00 level=info msg="starting to provision dashboards"
 logger=provisioning.dashboard t=2024-09-15T13:37:24.39078-07:00 level=info msg="finished to provision dashboards"
 logger=serviceaccounts t=2024-09-15T13:37:24.391233-07:00 level=warn msg="Failed to get usage metrics" error="context canceled"
+logger=settings t=2024-09-29T00:09:50.597635-07:00 level=info msg="Starting Grafana" version=11.2.0 commit=c57667e4481563f5e6cf945b03bc0626caa4dbeb branch=HEAD compiled=2024-09-29T00:09:50-07:00
+logger=settings t=2024-09-29T00:09:50.599577-07:00 level=info msg="Config loaded from" file="/Users/viploverahate/Documents/School/FEB - VDL/vehicle-data-link/grafana-v11.2.0/conf/defaults.ini"
+logger=settings t=2024-09-29T00:09:50.599631-07:00 level=info msg=Target target=[all]
+logger=settings t=2024-09-29T00:09:50.599656-07:00 level=info msg="Path Home" path="/Users/viploverahate/Documents/School/FEB - VDL/vehicle-data-link/grafana-v11.2.0"
+logger=settings t=2024-09-29T00:09:50.599681-07:00 level=info msg="Path Data" path="/Users/viploverahate/Documents/School/FEB - VDL/vehicle-data-link/grafana-v11.2.0/data"
+logger=settings t=2024-09-29T00:09:50.599697-07:00 level=info msg="Path Logs" path="/Users/viploverahate/Documents/School/FEB - VDL/vehicle-data-link/grafana-v11.2.0/data/log"
+logger=settings t=2024-09-29T00:09:50.59972-07:00 level=info msg="Path Plugins" path="/Users/viploverahate/Documents/School/FEB - VDL/vehicle-data-link/grafana-v11.2.0/data/plugins"
+logger=settings t=2024-09-29T00:09:50.599741-07:00 level=info msg="Path Provisioning" path="/Users/viploverahate/Documents/School/FEB - VDL/vehicle-data-link/grafana-v11.2.0/conf/provisioning"
+logger=settings t=2024-09-29T00:09:50.599762-07:00 level=info msg="App mode production"
+logger=featuremgmt t=2024-09-29T00:09:50.60007-07:00 level=info msg=FeatureToggles autoMigrateXYChartPanel=true exploreMetrics=true awsAsyncQueryCaching=true logsContextDatasourceUi=true prometheusAzureOverrideAudience=true alertingSimplifiedRouting=true groupToNestedTableTransformation=true correlations=true recordedQueriesMulti=true logsInfiniteScrolling=true tlsMemcached=true dashgpt=true kubernetesPlaylists=true publicDashboards=true transformationsVariableSupport=true logsExploreTableVisualisation=true nestedFolders=true recoveryThreshold=true alertingNoDataErrorExecution=true prometheusMetricEncyclopedia=true addFieldFromCalculationStatFunctions=true lokiStructuredMetadata=true lokiQuerySplitting=true transformationsRedesign=true lokiQueryHints=true annotationPermissionUpdate=true cloudWatchRoundUpEndTime=true prometheusConfigOverhaulAuth=true logRowsPopoverMenu=true formatString=true alertingInsights=true angularDeprecationUI=true lokiMetricDataplane=true prometheusDataplane=true dataplaneFrontendFallback=true cloudWatchNewLabelParsing=true influxdbBackendMigration=true topnav=true cloudWatchCrossAccountQuerying=true panelMonitoring=true managedPluginsInstall=true ssoSettingsApi=true
+logger=sqlstore t=2024-09-29T00:09:50.600184-07:00 level=info msg="Connecting to DB" dbtype=sqlite3
+logger=migrator t=2024-09-29T00:09:50.609089-07:00 level=info msg="Locking database"
+logger=migrator t=2024-09-29T00:09:50.60915-07:00 level=info msg="Starting DB migrations"
+logger=migrator t=2024-09-29T00:09:50.63033-07:00 level=info msg="migrations completed" performed=0 skipped=689 duration=629.977µs
+logger=migrator t=2024-09-29T00:09:50.630717-07:00 level=info msg="Unlocking database"
+logger=licensing t=2024-09-29T00:09:50.63235-07:00 level=info msg="Validated license token" appURL=http://localhost:3000/ source=disk status=NotFound
+logger=secrets t=2024-09-29T00:09:50.632487-07:00 level=info msg="Envelope encryption state" enabled=true currentprovider=secretKey.v1
+logger=renderer.manager t=2024-09-29T00:09:50.684182-07:00 level=error msg="Failed to get renderer plugin sources" error="failed to open plugins path"
+logger=plugin.angulardetectorsprovider.dynamic t=2024-09-29T00:09:50.685333-07:00 level=info msg="Restored cache from database" duration=1.034517ms
+logger=plugin.store t=2024-09-29T00:09:50.68718-07:00 level=info msg="Loading plugins..."
+logger=plugin.sources t=2024-09-29T00:09:50.687307-07:00 level=error msg="Failed to load external plugins" error="failed to open plugins path"
+logger=plugins.registration t=2024-09-29T00:09:50.866452-07:00 level=error msg="Could not register plugin" pluginId=xychart error="plugin xychart is already registered"
+logger=plugins.initialization t=2024-09-29T00:09:50.866515-07:00 level=error msg="Could not initialize plugin" pluginId=xychart error="plugin xychart is already registered"
+logger=plugin.store t=2024-09-29T00:09:50.868894-07:00 level=info msg="Plugins loaded" count=54 duration=181.709468ms
+logger=caching.service t=2024-09-29T00:09:50.870869-07:00 level=info msg="Caching service is disabled"
+logger=query_data t=2024-09-29T00:09:50.889806-07:00 level=info msg="Query Service initialization"
+logger=live.push_http t=2024-09-29T00:09:50.894174-07:00 level=info msg="Live Push Gateway initialization"
+logger=ngalert.notifier.alertmanager org=1 t=2024-09-29T00:09:50.898819-07:00 level=info msg="Applying new configuration to Alertmanager" configHash=d2c56faca6af2a5772ff4253222f7386
+logger=ngalert.state.manager t=2024-09-29T00:09:50.903116-07:00 level=info msg="Running in alternative execution of Error/NoData mode"
+logger=infra.usagestats.collector t=2024-09-29T00:09:50.909112-07:00 level=info msg="registering usage stat providers" usageStatsProvidersLen=3
+logger=provisioning.alerting t=2024-09-29T00:09:50.912198-07:00 level=info msg="starting to provision alerting"
+logger=provisioning.alerting t=2024-09-29T00:09:50.912268-07:00 level=info msg="finished to provision alerting"
+logger=grafanaStorageLogger t=2024-09-29T00:09:50.912518-07:00 level=info msg="Storage starting"
+logger=renderer.manager t=2024-09-29T00:09:50.912511-07:00 level=error msg="Failed to get renderer plugin sources" error="failed to open plugins path"
+logger=ngalert.state.manager t=2024-09-29T00:09:50.912432-07:00 level=info msg="Warming state cache for startup"
+logger=ngalert.multiorg.alertmanager t=2024-09-29T00:09:50.912995-07:00 level=info msg="Starting MultiOrg Alertmanager"
+logger=ngalert.state.manager t=2024-09-29T00:09:50.913234-07:00 level=info msg="State cache has been initialized" states=0 duration=801.152µs
+logger=ngalert.scheduler t=2024-09-29T00:09:50.913314-07:00 level=info msg="Starting scheduler" tickInterval=10s maxAttempts=1
+logger=ticker t=2024-09-29T00:09:50.913434-07:00 level=info msg=starting first_tick=2024-09-29T00:10:00-07:00
+logger=report t=2024-09-29T00:09:50.915809-07:00 level=warn msg="Scheduling and sending of reports disabled, SMTP is not configured and enabled. Configure SMTP to enable."
+logger=http.server t=2024-09-29T00:09:50.924205-07:00 level=info msg="HTTP Server Listen" address=[::]:3000 protocol=http subUrl= socket=
+logger=provisioning.dashboard t=2024-09-29T00:09:50.980637-07:00 level=info msg="starting to provision dashboards"
+logger=provisioning.dashboard t=2024-09-29T00:09:50.980699-07:00 level=info msg="finished to provision dashboards"
+logger=plugins.update.checker t=2024-09-29T00:09:51.206446-07:00 level=info msg="Update check succeeded" duration=294.010065ms
+logger=grafana.update.checker t=2024-09-29T00:09:51.206553-07:00 level=info msg="Update check succeeded" duration=294.159293ms
+logger=plugin.angulardetectorsprovider.dynamic t=2024-09-29T00:09:51.208102-07:00 level=info msg="Patterns update finished" duration=294.472257ms
+logger=grafana-apiserver t=2024-09-29T00:09:51.37114-07:00 level=error msg="Could not get process start time, could not read \"/proc\": stat /proc: no such file or directory"
+logger=grafana-apiserver t=2024-09-29T00:09:51.372052-07:00 level=info msg="Adding GroupVersion playlist.grafana.app v0alpha1 to ResourceManager"
+logger=grafana-apiserver t=2024-09-29T00:09:51.372595-07:00 level=info msg="Adding GroupVersion featuretoggle.grafana.app v0alpha1 to ResourceManager"
+logger=infra.usagestats t=2024-09-29T00:11:23.949565-07:00 level=info msg="Usage stats are ready to report"
+logger=infra.usagestats t=2024-09-29T00:11:51.193065-07:00 level=info msg="Sent usage stats" duration=210.658573ms
+logger=authn.service t=2024-09-29T00:12:05.357979-07:00 level=warn msg="Failed to authenticate request" client=auth.client.session error="user token not found"
+logger=context userId=0 orgId=0 uname= t=2024-09-29T00:12:05.358236-07:00 level=info msg="Request Completed" method=GET path=/ status=302 remote_addr=[::1] time_ms=0 duration=975.796µs size=29 referer= handler=/ status_source=server
+logger=authn.service t=2024-09-29T00:12:05.376113-07:00 level=warn msg="Failed to authenticate request" client=auth.client.session error="user token not found"
+logger=authn.service t=2024-09-29T00:13:46.199938-07:00 level=warn msg="Failed to authenticate request" client=auth.client.session error="user token not found"
+logger=authn.service t=2024-09-29T00:13:46.207098-07:00 level=info msg="Failed to authenticate request" client=auth.client.form error="[password-auth.failed] failed to authenticate identity: [identity.not-found] no user found: user not found"
+logger=context userId=0 orgId=0 uname= t=2024-09-29T00:13:46.207385-07:00 level=info msg=Unauthorized error="[password-auth.failed] failed to authenticate identity: [identity.not-found] no user found: user not found" remote_addr=[::1] traceID=
+logger=context userId=0 orgId=0 uname= t=2024-09-29T00:13:46.207623-07:00 level=info msg="Request Completed" method=POST path=/login status=401 remote_addr=[::1] time_ms=8 duration=8.856105ms size=107 referer=http://localhost:3000/login handler=/login status_source=server
+logger=authn.service t=2024-09-29T00:13:59.154456-07:00 level=warn msg="Failed to authenticate request" client=auth.client.session error="user token not found"
+logger=context userId=1 orgId=1 uname=admin t=2024-09-29T00:14:00.083062-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=-1 remote_addr=[::1] time_ms=1 duration=1.588299ms size=0 referer= handler=/api/live/ws status_source=server
+logger=cleanup t=2024-09-29T00:19:50.959478-07:00 level=info msg="Completed cleanup jobs" duration=43.284822ms
+logger=plugins.update.checker t=2024-09-29T00:19:51.41926-07:00 level=info msg="Update check succeeded" duration=209.465272ms
+logger=context userId=1 orgId=1 uname=admin t=2024-09-29T00:24:05.273088-07:00 level=info msg="Request Completed" method=GET path=/api/gnet/plugins/grafana-postgresql-datasource status=404 remote_addr=[::1] time_ms=158 duration=158.109457ms size=116 referer=http://localhost:3000/connections/datasources/edit/bdzc8vcgdyio0b handler=/api/gnet/* status_source=server
+logger=context userId=1 orgId=1 uname=admin t=2024-09-29T00:29:05.751529-07:00 level=info msg="Request Completed" method=POST path=/api/ds/query status=400 remote_addr=[::1] time_ms=70 duration=70.25373ms size=286 referer=http://localhost:3000/connections/datasources/edit/bdzc8vcgdyio0b handler=/api/ds/query status_source=downstream
+logger=cleanup t=2024-09-29T00:29:50.95635-07:00 level=info msg="Completed cleanup jobs" duration=37.529337ms
+logger=plugins.update.checker t=2024-09-29T00:29:51.477301-07:00 level=info msg="Update check succeeded" duration=265.490237ms
+logger=cleanup t=2024-09-29T00:39:50.909272-07:00 level=info msg="Completed cleanup jobs" duration=38.141138ms
+logger=plugins.update.checker t=2024-09-29T00:39:51.41959-07:00 level=info msg="Update check succeeded" duration=255.510707ms
+logger=infra.usagestats t=2024-09-29T00:41:23.955691-07:00 level=info msg="Usage stats are ready to report"
+logger=context userId=1 orgId=1 uname=admin t=2024-09-29T00:45:10.177411-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=-1 remote_addr=[::1] time_ms=47 duration=47.758302ms size=0 referer= handler=/api/live/ws status_source=server
+logger=cleanup t=2024-09-29T00:55:25.692504-07:00 level=info msg="Completed cleanup jobs" duration=46.472452ms
+logger=plugins.update.checker t=2024-09-29T00:55:26.282711-07:00 level=info msg="Update check succeeded" duration=342.695891ms
+logger=cleanup t=2024-09-29T02:07:59.060847-07:00 level=info msg="Completed cleanup jobs" duration=768.36235ms
+logger=plugins.update.checker t=2024-09-29T02:07:59.230359-07:00 level=info msg="Update check succeeded" duration=645.187626ms
+logger=licensing t=2024-09-29T03:01:56.884703-07:00 level=info msg="Validated license token" appURL=http://localhost:3000/ source=disk status=NotFound
+logger=licensing.renewal t=2024-09-29T03:01:56.885298-07:00 level=warn msg="failed to load or validate token" err="license token file not found: /Users/viploverahate/Documents/School/FEB - VDL/vehicle-data-link/grafana-v11.2.0/data/license.jwt"
+logger=cleanup t=2024-09-29T03:01:56.912418-07:00 level=info msg="Completed cleanup jobs" duration=83.522389ms
+logger=plugins.update.checker t=2024-09-29T03:01:57.351628-07:00 level=info msg="Update check succeeded" duration=227.680368ms
+logger=infra.usagestats t=2024-09-29T03:14:15.177692-07:00 level=info msg="Usage stats are ready to report"
+logger=cleanup t=2024-09-29T04:10:28.534292-07:00 level=info msg="Completed cleanup jobs" duration=36.836118ms
+logger=plugins.update.checker t=2024-09-29T04:10:29.076289-07:00 level=info msg="Update check succeeded" duration=284.538994ms
+logger=context userId=0 orgId=0 uname= t=2024-09-29T04:46:33.447217-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=44 duration=44.349903ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T04:46:35.362693-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=0 duration=802.625µs size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T04:46:35.691987-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=0 duration=680.096µs size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T04:46:40.382387-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=0 duration=671.947µs size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T04:46:45.729984-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=2 duration=2.864661ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T04:46:56.825184-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=3 duration=3.010083ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T04:47:06.534139-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=3 duration=3.885967ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T04:47:11.534186-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=3 duration=3.008883ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:02:19.007165-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=0 duration=482.967µs size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:02:34.31205-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=2 duration=2.864839ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:02:42.371173-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=2 duration=2.616575ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:03:03.187025-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=2 duration=2.168365ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:03:13.172347-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=1 duration=1.079182ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:03:25.148448-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=0 duration=410.046µs size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:03:37.150569-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=0 duration=475.503µs size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:03:44.147688-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=0 duration=597.071µs size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:03:46.129154-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=0 duration=909.19µs size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:04:00.173224-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=0 duration=798.614µs size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:04:06.166667-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=1 duration=1.244644ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:04:12.290472-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=0 duration=878.287µs size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:15:32.895442-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=0 duration=639.542µs size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:15:53.289607-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=2 duration=2.238822ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:15:57.136802-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=7 duration=7.397336ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:16:17.188137-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=1 duration=1.087793ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:16:20.120224-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=0 duration=940.708µs size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:23:28.635159-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=2 duration=2.430608ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:23:43.616009-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=2 duration=2.727687ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:23:46.46281-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=2 duration=2.444881ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:23:59.509406-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=0 duration=869.344µs size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:30:32.102625-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=0 duration=880.314µs size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:30:34.166122-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=0 duration=829.44µs size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:30:53.241829-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=2 duration=2.346475ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:31:13.133444-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=0 duration=885.942µs size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:37:00.836343-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=2 duration=2.191119ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:37:06.829331-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=2 duration=2.317741ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:37:09.829901-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=2 duration=2.337643ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:37:18.842599-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=2 duration=2.297866ms size=105 referer= handler=/api/live/ws status_source=server
+logger=cleanup t=2024-09-29T05:37:21.449425-07:00 level=info msg="Completed cleanup jobs" duration=21.080762ms
+logger=plugins.update.checker t=2024-09-29T05:37:21.957012-07:00 level=info msg="Update check succeeded" duration=233.688469ms
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:37:28.734645-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=1 duration=1.02468ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:37:30.685995-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=0 duration=867.446µs size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:41:48.061522-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=0 duration=852.155µs size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:41:52.063545-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=2 duration=2.157245ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:41:57.327229-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=2 duration=2.158047ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:42:17.198361-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=2 duration=2.958086ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:42:19.018057-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=2 duration=2.01225ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:42:27.087002-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=1 duration=1.608833ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:45:37.511977-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=4 duration=4.446435ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:45:46.516741-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=2 duration=2.71148ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:45:56.526065-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=8 duration=8.469131ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:46:02.420554-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=4 duration=4.465533ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:46:05.419544-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=0 duration=931.027µs size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:46:09.423104-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=0 duration=847.631µs size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:47:16.093323-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=0 duration=593.416µs size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:47:19.482103-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=0 duration=552.211µs size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:47:21.525989-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=2 duration=2.457549ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T05:47:42.825072-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=1 duration=1.283616ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=1 orgId=1 uname=admin t=2024-09-29T05:47:55.77185-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=-1 remote_addr=[::1] time_ms=36 duration=36.907259ms size=0 referer= handler=/api/live/ws status_source=server
+logger=cleanup t=2024-09-29T06:37:08.436733-07:00 level=info msg="Completed cleanup jobs" duration=42.949204ms
+logger=plugins.update.checker t=2024-09-29T06:37:08.938846-07:00 level=info msg="Update check succeeded" duration=250.632592ms
+logger=infra.usagestats t=2024-09-29T06:56:21.685299-07:00 level=info msg="Usage stats are ready to report"
+logger=context userId=1 orgId=1 uname=admin t=2024-09-29T06:59:28.840195-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=-1 remote_addr=[::1] time_ms=11 duration=11.427419ms size=0 referer= handler=/api/live/ws status_source=server
+logger=cleanup t=2024-09-29T07:40:56.626261-07:00 level=info msg="Completed cleanup jobs" duration=28.588795ms
+logger=plugins.update.checker t=2024-09-29T07:40:57.207955-07:00 level=info msg="Update check succeeded" duration=316.111661ms
+logger=cleanup t=2024-09-29T08:53:27.156591-07:00 level=info msg="Completed cleanup jobs" duration=53.418424ms
+logger=plugins.update.checker t=2024-09-29T08:53:27.626651-07:00 level=info msg="Update check succeeded" duration=229.520051ms
+logger=licensing t=2024-09-29T09:39:31.277171-07:00 level=info msg="Validated license token" appURL=http://localhost:3000/ source=disk status=NotFound
+logger=licensing.renewal t=2024-09-29T09:39:31.278236-07:00 level=warn msg="failed to load or validate token" err="license token file not found: /Users/viploverahate/Documents/School/FEB - VDL/vehicle-data-link/grafana-v11.2.0/data/license.jwt"
+logger=cleanup t=2024-09-29T09:39:31.403248-07:00 level=info msg="Completed cleanup jobs" duration=194.131183ms
+logger=plugins.update.checker t=2024-09-29T09:39:31.766408-07:00 level=info msg="Update check succeeded" duration=263.595994ms
+logger=infra.usagestats t=2024-09-29T09:50:52.714194-07:00 level=info msg="Usage stats are ready to report"
+logger=cleanup t=2024-09-29T10:39:36.403041-07:00 level=info msg="Completed cleanup jobs" duration=72.009937ms
+logger=plugins.update.checker t=2024-09-29T10:39:37.26619-07:00 level=info msg="Update check succeeded" duration=640.573381ms
+logger=context userId=0 orgId=0 uname= t=2024-09-29T11:55:56.246292-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=10 duration=10.632812ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T12:01:16.047394-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=0 duration=719.379µs size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T12:01:17.816916-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=16 duration=16.281114ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T12:01:18.747238-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=1 duration=1.824906ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T12:01:23.393079-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=0 duration=577.496µs size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T12:01:32.403262-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=5 duration=5.906979ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T12:01:43.349278-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=3 duration=3.229881ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T12:01:52.419082-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=3 duration=3.605619ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T12:02:21.665917-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=5 duration=5.51364ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T12:06:16.551444-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=4 duration=4.014945ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T12:06:40.134799-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=2 duration=2.450917ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T12:06:42.677951-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=12 duration=12.906086ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T12:06:54.859857-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=2 duration=2.431836ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T12:07:04.836882-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=2 duration=2.708425ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T12:08:01.505684-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=1 duration=1.654194ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T12:08:05.146748-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=0 duration=513.295µs size=105 referer= handler=/api/live/ws status_source=server
+logger=cleanup t=2024-09-29T12:08:15.307039-07:00 level=info msg="Completed cleanup jobs" duration=113.138435ms
+logger=plugins.update.checker t=2024-09-29T12:08:15.758249-07:00 level=info msg="Update check succeeded" duration=239.603307ms
+logger=context userId=0 orgId=0 uname= t=2024-09-29T12:08:15.792295-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=4 duration=4.003648ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T12:08:30.608468-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=2 duration=2.39963ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T12:08:34.438959-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=2 duration=2.214182ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T12:11:09.077108-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=0 duration=387.701µs size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=0 orgId=0 uname= t=2024-09-29T12:11:39.486834-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=401 remote_addr=[::1] time_ms=3 duration=3.385761ms size=105 referer= handler=/api/live/ws status_source=server
+logger=context userId=1 orgId=1 uname=admin t=2024-09-29T12:11:56.501464-07:00 level=info msg="Request Completed" method=GET path=/api/live/ws status=-1 remote_addr=[::1] time_ms=26 duration=26.385292ms size=0 referer= handler=/api/live/ws status_source=server
+logger=cleanup t=2024-09-29T12:20:39.284654-07:00 level=info msg="Completed cleanup jobs" duration=68.498306ms
+logger=plugins.update.checker t=2024-09-29T12:20:39.815173-07:00 level=info msg="Update check succeeded" duration=303.123918ms
+logger=infra.usagestats t=2024-09-29T12:22:12.319167-07:00 level=info msg="Usage stats are ready to report"
+logger=cleanup t=2024-09-29T12:30:39.317109-07:00 level=info msg="Completed cleanup jobs" duration=34.577743ms
+logger=plugins.update.checker t=2024-09-29T12:30:39.689944-07:00 level=info msg="Update check succeeded" duration=114.546776ms
+logger=cleanup t=2024-09-29T12:40:39.33134-07:00 level=info msg="Completed cleanup jobs" duration=42.606158ms
+logger=plugins.update.checker t=2024-09-29T12:40:39.763344-07:00 level=info msg="Update check succeeded" duration=180.90132ms
