@@ -5,26 +5,26 @@ import random
 from datetime import datetime, timedelta
 
 
-#this is a test for github
-# Connect to your PostgreSQL database
+# Connect to PostgreSQL database
 conn = psycopg2.connect(
     dbname="telemetrydb",
     user="telemetryuser",
     password="ball",
-    host="localhost:5432"
+    host="localhost",
+    port="5432"
 )
 cur = conn.cursor()
 
 # Create a table for telemetry data
 cur.execute("""
-    CREATE TABLE IF NOT EXISTS telemetry_data (
-        id SERIAL PRIMARY KEY,
-        timestamp TIMESTAMP,
-        vehicle_speed FLOAT,
-        engine_rpm INT,
-        battery_voltage FLOAT,
-        temperature FLOAT
-    )
+CREATE TABLE IF NOT EXISTS telemetry_data (
+    id SERIAL PRIMARY KEY,
+    timestamp TIMESTAMP,
+    vehicle_speed FLOAT,
+    engine_rpm INT,
+    battery_voltage FLOAT,
+    temperature FLOAT
+)
 """)
 
 # Initialize Faker
