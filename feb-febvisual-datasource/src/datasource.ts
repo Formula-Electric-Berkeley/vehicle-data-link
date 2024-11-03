@@ -1,5 +1,5 @@
-import { DataSourceInstanceSettings, CoreApp, ScopedVars } from '@grafana/data';
-import { DataSourceWithBackend, getTemplateSrv } from '@grafana/runtime';
+import { DataSourceInstanceSettings, CoreApp, ScopedVars, LiveChannelScope, DataQueryRequest } from '@grafana/data';
+import { DataSourceWithBackend, getGrafanaLiveSrv, getTemplateSrv } from '@grafana/runtime';
 
 import { MyQuery, MyDataSourceOptions, DEFAULT_QUERY } from './types';
 
