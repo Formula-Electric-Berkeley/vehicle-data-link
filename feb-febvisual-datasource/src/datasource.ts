@@ -23,4 +23,22 @@ export class DataSource extends DataSourceWithBackend<MyQuery, MyDataSourceOptio
     // if no query has been provided, prevent the query from being executed
     return !!query.queryText;
   }
+
+  query(request: DataQueryRequest<MyQuery>): Observable<DataQueryResponse> {
+    const observables = request.targets.map((query, index) => {
+
+      return getGrafanaLiveSrv().getDataStream({
+        addr: {
+          scope: LiveChannelScope.DataSource,
+          namespace: this.uid,
+          path: `my-ws/custom-${query.lowerLimit}-${query.upperLimit}-${query.tickInterval}`, // this will allow each new query to create a new connection
+          data: {
+            ...query,
+          },
+        },
+      });
+    });
+
+    return merge(...observables);
+  }
 }
