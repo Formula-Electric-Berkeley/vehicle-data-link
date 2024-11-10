@@ -18,9 +18,9 @@ import (
 // backend.CheckHealthHandler interfaces. Plugin should not implement all these
 // interfaces - only those which are required for a particular task.
 var (
-	_ backend.QueryDataHandler      = (*Datasource)(nil)
-	_ backend.CheckHealthHandler    = (*Datasource)(nil)
-	_ instancemgmt.InstanceDisposer = (*Datasource)(nil)
+    _ backend.CheckHealthHandler    = (*Datasource)(nil)
+    _ instancemgmt.InstanceDisposer = (*Datasource)(nil)
+    _ backend.StreamHandler         = (*Datasource)(nil)
 )
 
 // NewDatasource creates a new datasource instance.
@@ -94,23 +94,56 @@ func (d *Datasource) query(_ context.Context, pCtx backend.PluginContext, query 
 // datasource configuration page which allows users to verify that
 // a datasource is working as expected.
 func (d *Datasource) CheckHealth(_ context.Context, req *backend.CheckHealthRequest) (*backend.CheckHealthResult, error) {
-	res := &backend.CheckHealthResult{}
-	config, err := models.LoadPluginSettings(*req.PluginContext.DataSourceInstanceSettings)
+    return &backend.CheckHealthResult{
+      Status:  backend.HealthStatusOk,
+      Message: "Data source is working",
+    }, nil
+  }
 
-	if err != nil {
-		res.Status = backend.HealthStatusError
-		res.Message = "Unable to load settings"
-		return res, nil
-	}
 
-	if config.Secrets.ApiKey == "" {
-		res.Status = backend.HealthStatusError
-		res.Message = "API key is missing"
-		return res, nil
-	}
 
-	return &backend.CheckHealthResult{
-		Status:  backend.HealthStatusOk,
-		Message: "Data source is working",
-	}, nil
+
+func (d *Datasource) SubscribeStream(context.Context, *backend.SubscribeStreamRequest) (*backend.SubscribeStreamResponse, error) {
+    return &backend.SubscribeStreamResponse{
+        Status: backend.SubscribeStreamStatusOK,
+    }, nil
+}
+
+func (d *Datasource) PublishStream(context.Context, *backend.PublishStreamRequest) (*backend.PublishStreamResponse, error) {
+    return &backend.PublishStreamResponse{
+        Status: backend.PublishStreamStatusPermissionDenied,
+    }, nil
+}
+
+func (d *Datasource) RunStream(ctx context.Context, req *backend.RunStreamRequest, sender *backend.StreamSender) error {
+    q := Query{}
+    json.Unmarshal(req.Data, &q)
+
+    s := rand.NewSource(time.Now().UnixNano())
+    r := rand.New(s)
+
+    ticker := time.NewTicker(time.Duration(q.TickInterval) * time.Millisecond)
+    defer ticker.Stop()
+
+    for {
+        select {
+        case <-ctx.Done():
+            return ctx.Err()
+        case <-ticker.C:
+            // we generate a random value using the intervals provided by the frontend
+            randomValue := r.Float64()*(q.UpperLimit-q.LowerLimit) + q.LowerLimit
+
+            err := sender.SendFrame(
+                data.NewFrame(
+                    "response",
+                    data.NewField("time", nil, []time.Time{time.Now()}),
+                    data.NewField("value", nil, []float64{randomValue})),
+                data.IncludeAll,
+            )
+
+            if err != nil {
+                Logger.Error("Failed send frame", "error", err)
+            }
+        }
+    }
 }
