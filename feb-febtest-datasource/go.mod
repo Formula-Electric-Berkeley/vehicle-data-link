@@ -63,4 +63,6 @@ require (
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/fsnotify/fsnotify.v1 v1.4.7 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
+    github.com/lib/pq v1.10.9
+)
 )

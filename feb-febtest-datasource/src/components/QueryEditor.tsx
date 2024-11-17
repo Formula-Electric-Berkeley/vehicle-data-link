@@ -1,37 +1,37 @@
 import React, { ChangeEvent } from 'react';
-import { InlineField, Input, Stack } from '@grafana/ui';
+import { InlineField, Input, TextArea, Stack } from '@grafana/ui';
 import { QueryEditorProps } from '@grafana/data';
 import { DataSource } from '../datasource';
 import { MyDataSourceOptions, MyQuery } from '../types';
-j
+
 type Props = QueryEditorProps<DataSource, MyQuery, MyDataSourceOptions>;
 
 export function QueryEditor({ query, onChange, onRunQuery }: Props) {
-  const onLowerLimitChange = (event: ChangeEvent<HTMLInputElement>) => {
-    onChange({ ...query, lowerLimit: event.target.valueAsNumber });
+  const onTableNameChange = (event: ChangeEvent<HTMLInputElement>) => {
+    onChange({ ...query, tableName: event.target.value });
   };
 
-  const onUpperLimitChange = (event: ChangeEvent<HTMLInputElement>) => {
-    onChange({ ...query, upperLimit: event.target.valueAsNumber });
+  const onSqlQueryChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    onChange({ ...query, sqlQuery: event.target.value });
   };
 
   const onTickIntervalChange = (event: ChangeEvent<HTMLInputElement>) => {
     onChange({ ...query, tickInterval: event.target.valueAsNumber });
   };
 
-  const { upperLimit, lowerLimit, tickInterval } = query;
+  const { tableName, sqlQuery, tickInterval } = query;
 
   return (
-    <>
-      <InlineField label="Lower Limit" labelWidth={16} tooltip="Random numbers lower limit">
-        <Input onChange={onLowerLimitChange} onBlur={onRunQuery} value={lowerLimit || ''} type="number" />
+    <Stack direction="column" gap={2}>
+      <InlineField label="Table Name" labelWidth={16} tooltip="Name of the PostgreSQL table to query">
+        <Input onChange={onTableNameChange} onBlur={onRunQuery} value={tableName || ''} />
       </InlineField>
-      <InlineField label="Upper Limit" labelWidth={16} tooltip="Random numbers upper limit">
-        <Input onChange={onUpperLimitChange} onBlur={onRunQuery} value={upperLimit || ''} type="number" />
+      <InlineField label="SQL Query" labelWidth={16} tooltip="Custom SQL query (optional)">
+        <TextArea onChange={onSqlQueryChange} onBlur={onRunQuery} value={sqlQuery || ''} rows={4} />
       </InlineField>
-      <InlineField label="Tick interval" labelWidth={16} tooltip="Server tick interval">
+      <InlineField label="Tick interval (ms)" labelWidth={16} tooltip="Server tick interval in milliseconds">
         <Input onChange={onTickIntervalChange} onBlur={onRunQuery} value={tickInterval || ''} type="number" />
       </InlineField>
-    <>
+    </Stack>
   );
 }

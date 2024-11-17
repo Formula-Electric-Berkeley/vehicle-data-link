@@ -2,14 +2,15 @@ package plugin
 
 import (
 	"context"
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"time"
 
+	"github.com/feb/feb-test/pkg/models"
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/grafana/grafana-plugin-sdk-go/backend/instancemgmt"
 	"github.com/grafana/grafana-plugin-sdk-go/data"
-	"github.com/feb/feb-test/pkg/models"
 )
 
 // Make sure Datasource implements required interfaces. This is important to do
@@ -24,19 +25,40 @@ var (
 )
 
 // NewDatasource creates a new datasource instance.
-func NewDatasource(_ context.Context, _ backend.DataSourceInstanceSettings) (instancemgmt.Instance, error) {
-	return &Datasource{}, nil
+func NewDatasource(_ backend.DataSourceInstanceSettings) (instancemgmt.Instance, error) {
+    connStr := "user=telemetryuser password=ball dbname=telemetrydb sslmode=disable"
+    db, err := sql.Open("postgres", connStr)
+    if err != nil {
+        return nil, err
+    }
+    return &Datasource{db: db}, nil
 }
 
 // Datasource is an example datasource which can respond to data queries, reports
 // its health and has streaming skills.
-type Datasource struct{}
+type Datasource struct{
+	im   instancemgmt.InstanceManager
+    db   *sql.DB  // Add this line
+}
+
+//implementing method to intialize database connection
+func (d *Datasource) initDB() error {
+    // Replace with your database connection details
+    db, err := sql.Open("your_database_driver", "your_connection_string")
+    if err != nil {
+        return err
+    }
+    d.db = db
+    return nil
+}
 
 // Dispose here tells plugin SDK that plugin wants to clean up resources when a new instance
 // created. As soon as datasource settings change detected by SDK old datasource instance will
 // be disposed and a new one will be created using NewSampleDatasource factory function.
 func (d *Datasource) Dispose() {
-	// Clean up datasource instance resources.
+    if d.db != nil {
+        d.db.Close()
+    }
 }
 
 // QueryData handles multiple queries and returns multiple responses.
@@ -93,12 +115,20 @@ func (d *Datasource) query(_ context.Context, pCtx backend.PluginContext, query 
 // The main use case for these health checks is the test button on the
 // datasource configuration page which allows users to verify that
 // a datasource is working as expected.
-func (d *Datasource) CheckHealth(_ context.Context, req *backend.CheckHealthRequest) (*backend.CheckHealthResult, error) {
+func (d *Datasource) CheckHealth(ctx context.Context, req *backend.CheckHealthRequest) (*backend.CheckHealthResult, error) {
+    err := d.db.PingContext(ctx)
+    if err != nil {
+        return &backend.CheckHealthResult{
+            Status:  backend.HealthStatusError,
+            Message: fmt.Sprintf("failed to connect to database: %v", err),
+        }, nil
+    }
+
     return &backend.CheckHealthResult{
-      Status:  backend.HealthStatusOk,
-      Message: "Data source is working",
+        Status:  backend.HealthStatusOk,
+        Message: "Data source is working",
     }, nil
-  }
+}
 
 
 
@@ -115,35 +145,68 @@ func (d *Datasource) PublishStream(context.Context, *backend.PublishStreamReques
     }, nil
 }
 
-func (d *Datasource) RunStream(ctx context.Context, req *backend.RunStreamRequest, sender *backend.StreamSender) error {
-    q := Query{}
-    json.Unmarshal(req.Data, &q)
-
-    s := rand.NewSource(time.Now().UnixNano())
-    r := rand.New(s)
-
-    ticker := time.NewTicker(time.Duration(q.TickInterval) * time.Millisecond)
-    defer ticker.Stop()
-
-    for {
-        select {
-        case <-ctx.Done():
-            return ctx.Err()
-        case <-ticker.C:
-            // we generate a random value using the intervals provided by the frontend
-            randomValue := r.Float64()*(q.UpperLimit-q.LowerLimit) + q.LowerLimit
-
-            err := sender.SendFrame(
-                data.NewFrame(
-                    "response",
-                    data.NewField("time", nil, []time.Time{time.Now()}),
-                    data.NewField("value", nil, []float64{randomValue})),
-                data.IncludeAll,
-            )
-
-            if err != nil {
-                Logger.Error("Failed send frame", "error", err)
-            }
-        }
+func (d *Datasource) fetchDataFromDB() (float64, error) {
+    var value float64
+    err := d.db.QueryRow("SELECT timestamp, vehicle_speed FROM telemetry_data ORDER BY timestamp DESC LIMIT 50").Scan(&value)
+    if err != nil {
+        return 0, err
     }
+    return value, nil
+}
+
+func (d *Datasource) RunStream(ctx context.Context, req *backend.RunStreamRequest, sender *backend.StreamSender) error {
+    func (d *Datasource) RunStream(ctx context.Context, req *backend.RunStreamRequest, sender *backend.StreamSender) error {
+		q := Query{}
+		json.Unmarshal(req.Data, &q)
+	
+		ticker := time.NewTicker(time.Duration(q.TickInterval) * time.Millisecond)
+		defer ticker.Stop()
+	
+		for {
+			select {
+			case <-ctx.Done():
+				return ctx.Err()
+			case <-ticker.C:
+				// Query your PostgreSQL database
+				rows, err := d.db.QueryContext(ctx, "SELECT timestamp, vehicle_speed FROM telemetry_data ORDER BY timestamp DESC LIMIT 1")
+				if err != nil {
+					return err
+				}
+				defer rows.Close()
+	
+				var timestamp time.Time
+				var value float64
+				if rows.Next() {
+					err = rows.Scan(&timestamp, &value)
+					if err != nil {
+						return err
+					}
+				}
+	
+				// Send the data
+				err = sender.SendFrame(data.NewFrame("response",
+					data.NewField("time", nil, []time.Time{timestamp}),
+					data.NewField("value", nil, []float64{value}),
+				), data.IncludeAll)
+				if err != nil {
+					return err
+				}
+			}
+		}
+	}
+
+	func (d *Datasource) CheckHealth(ctx context.Context, req *backend.CheckHealthRequest) (*backend.CheckHealthResult, error) {
+    err := d.db.PingContext(ctx)
+    if err != nil {
+        return &backend.CheckHealthResult{
+            Status:  backend.HealthStatusError,
+            Message: fmt.Sprintf("failed to connect to database: %v", err),
+        }, nil
+    }
+
+    return &backend.CheckHealthResult{
+        Status:  backend.HealthStatusOk,
+        Message: "Data source is working",
+    }, nil
+}
 }
