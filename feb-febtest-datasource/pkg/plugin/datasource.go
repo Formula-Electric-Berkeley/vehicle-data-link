@@ -7,10 +7,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/feb/feb-test/pkg/models"
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/grafana/grafana-plugin-sdk-go/backend/instancemgmt"
 	"github.com/grafana/grafana-plugin-sdk-go/data"
+	"github.com/lib/pq"
 )
 
 // Make sure Datasource implements required interfaces. This is important to do
@@ -24,8 +24,15 @@ var (
     _ backend.StreamHandler         = (*Datasource)(nil)
 )
 
+type Query struct {
+    TableName    string `json:"tableName"`
+    SQLQuery     string `json:"sqlQuery"`
+    TickInterval int    `json:"tickInterval"`
+}
+
 // NewDatasource creates a new datasource instance.
-func NewDatasource(_ backend.DataSourceInstanceSettings) (instancemgmt.Instance, error) {
+func NewDatasource(settings backend.DataSourceInstanceSettings) (instancemgmt.Instance, error) {
+    // Use settings to get connection details if needed
     connStr := "user=telemetryuser password=ball dbname=telemetrydb sslmode=disable"
     db, err := sql.Open("postgres", connStr)
     if err != nil {
@@ -37,7 +44,7 @@ func NewDatasource(_ backend.DataSourceInstanceSettings) (instancemgmt.Instance,
 // Datasource is an example datasource which can respond to data queries, reports
 // its health and has streaming skills.
 type Datasource struct{
-	im   instancemgmt.InstanceManager
+	//im   instancemgmt.InstanceManager
     db   *sql.DB  // Add this line
 }
 
@@ -155,58 +162,44 @@ func (d *Datasource) fetchDataFromDB() (float64, error) {
 }
 
 func (d *Datasource) RunStream(ctx context.Context, req *backend.RunStreamRequest, sender *backend.StreamSender) error {
-    func (d *Datasource) RunStream(ctx context.Context, req *backend.RunStreamRequest, sender *backend.StreamSender) error {
-		q := Query{}
-		json.Unmarshal(req.Data, &q)
-	
-		ticker := time.NewTicker(time.Duration(q.TickInterval) * time.Millisecond)
-		defer ticker.Stop()
-	
-		for {
-			select {
-			case <-ctx.Done():
-				return ctx.Err()
-			case <-ticker.C:
-				// Query your PostgreSQL database
-				rows, err := d.db.QueryContext(ctx, "SELECT timestamp, vehicle_speed FROM telemetry_data ORDER BY timestamp DESC LIMIT 1")
-				if err != nil {
-					return err
-				}
-				defer rows.Close()
-	
-				var timestamp time.Time
-				var value float64
-				if rows.Next() {
-					err = rows.Scan(&timestamp, &value)
-					if err != nil {
-						return err
-					}
-				}
-	
-				// Send the data
-				err = sender.SendFrame(data.NewFrame("response",
-					data.NewField("time", nil, []time.Time{timestamp}),
-					data.NewField("value", nil, []float64{value}),
-				), data.IncludeAll)
-				if err != nil {
-					return err
-				}
-			}
-		}
-	}
+    q := Query{}
+    json.Unmarshal(req.Data, &q)
 
-	func (d *Datasource) CheckHealth(ctx context.Context, req *backend.CheckHealthRequest) (*backend.CheckHealthResult, error) {
-    err := d.db.PingContext(ctx)
-    if err != nil {
-        return &backend.CheckHealthResult{
-            Status:  backend.HealthStatusError,
-            Message: fmt.Sprintf("failed to connect to database: %v", err),
-        }, nil
+    ticker := time.NewTicker(time.Duration(q.TickInterval) * time.Millisecond)
+    defer ticker.Stop()
+
+    for {
+        select {
+        case <-ctx.Done():
+            return ctx.Err()
+        case <-ticker.C:
+            // Query your PostgreSQL database
+            rows, err := d.db.QueryContext(ctx, "SELECT time, value FROM your_table ORDER BY time DESC LIMIT 1")
+            if err != nil {
+                return err
+            }
+            defer rows.Close()
+
+            var timestamp time.Time
+            var value float64
+            if rows.Next() {
+                err = rows.Scan(&timestamp, &value)
+                if err != nil {
+                    return err
+                }
+            }
+
+            // Send the data
+            err = sender.SendFrame(data.NewFrame("response",
+                data.NewField("time", nil, []time.Time{timestamp}),
+                data.NewField("value", nil, []float64{value}),
+            ), data.IncludeAll)
+            if err != nil {
+                return err
+            }
+        }
     }
+}
 
-    return &backend.CheckHealthResult{
-        Status:  backend.HealthStatusOk,
-        Message: "Data source is working",
-    }, nil
-}
-}
+	
+
