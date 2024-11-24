@@ -4,12 +4,14 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"time"
+	//"time"
 
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/grafana/grafana-plugin-sdk-go/backend/instancemgmt"
 	"github.com/grafana/grafana-plugin-sdk-go/data"
-	"github.com/feb/feb-data2/pkg/models"
+	//"github.com/feb/feb-data2/pkg/models"
+	"database/sql"
+	_ "github.com/lib/pq"
 )
 
 // Make sure Datasource implements required interfaces. This is important to do
@@ -24,19 +26,43 @@ var (
 )
 
 // NewDatasource creates a new datasource instance.
-func NewDatasource(_ context.Context, _ backend.DataSourceInstanceSettings) (instancemgmt.Instance, error) {
-	return &Datasource{}, nil
+func NewDatasource(_ context.Context, settings backend.DataSourceInstanceSettings) (instancemgmt.Instance, error) {
+    var jsonData map[string]interface{}
+    err := json.Unmarshal(settings.JSONData, &jsonData)
+    if err != nil {
+        return nil, err
+    }
+
+    host := jsonData["localhost"].(string)
+    port := jsonData["5432"].(string)
+    dbName := jsonData["telemetrydb"].(string)
+    user := jsonData["telemetryuser"].(string)
+    password := settings.DecryptedSecureJSONData["ball"]
+
+    connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+        host, port, user, password, dbName)
+
+    db, err := sql.Open("postgres", connStr)
+    if err != nil {
+        return nil, err
+    }
+
+    return &Datasource{db: db}, nil
 }
 
 // Datasource is an example datasource which can respond to data queries, reports
 // its health and has streaming skills.
-type Datasource struct{}
+type Datasource struct{
+	db *sql.DB
+}
 
 // Dispose here tells plugin SDK that plugin wants to clean up resources when a new instance
 // created. As soon as datasource settings change detected by SDK old datasource instance will
 // be disposed and a new one will be created using NewSampleDatasource factory function.
 func (d *Datasource) Dispose() {
-	// Clean up datasource instance resources.
+	if d.db != nil {
+        d.db.Close()
+    }
 }
 
 // QueryData handles multiple queries and returns multiple responses.
@@ -62,55 +88,71 @@ func (d *Datasource) QueryData(ctx context.Context, req *backend.QueryDataReques
 type queryModel struct{}
 
 func (d *Datasource) query(_ context.Context, pCtx backend.PluginContext, query backend.DataQuery) backend.DataResponse {
-	var response backend.DataResponse
+    var response backend.DataResponse
 
-	// Unmarshal the JSON into our queryModel.
-	var qm queryModel
+    var qm struct {
+        SQL string `json:"sql"`
+    }
 
-	err := json.Unmarshal(query.JSON, &qm)
-	if err != nil {
-		return backend.ErrDataResponse(backend.StatusBadRequest, fmt.Sprintf("json unmarshal: %v", err.Error()))
-	}
+    err := json.Unmarshal(query.JSON, &qm)
+    if err != nil {
+        return backend.ErrDataResponse(backend.StatusBadRequest, fmt.Sprintf("json unmarshal: %v", err.Error()))
+    }
 
-	// create data frame response.
-	// For an overview on data frames and how grafana handles them:
-	// https://grafana.com/developers/plugin-tools/introduction/data-frames
-	frame := data.NewFrame("response")
+    // Execute the SQL query
+    rows, err := d.db.Query(qm.SQL)
+    if err != nil {
+        return backend.ErrDataResponse(backend.StatusBadRequest, fmt.Sprintf("query error: %v", err.Error()))
+    }
+    defer rows.Close()
 
-	// add fields.
-	frame.Fields = append(frame.Fields,
-		data.NewField("time", nil, []time.Time{query.TimeRange.From, query.TimeRange.To}),
-		data.NewField("values", nil, []int64{10, 20}),
-	)
+    // Get column names
+    columns, err := rows.Columns()
+    if err != nil {
+        return backend.ErrDataResponse(backend.StatusBadRequest, fmt.Sprintf("column error: %v", err.Error()))
+    }
 
-	// add the frames to the response.
-	response.Frames = append(response.Frames, frame)
+    // Create a new data frame
+    frame := data.NewFrame("response")
 
-	return response
+    // Prepare slices to hold the data
+    values := make([]interface{}, len(columns))
+    valuePtrs := make([]interface{}, len(columns))
+
+    for rows.Next() {
+        for i := range columns {
+            valuePtrs[i] = &values[i]
+        }
+
+        if err := rows.Scan(valuePtrs...); err != nil {
+            return backend.ErrDataResponse(backend.StatusBadRequest, fmt.Sprintf("row scan error: %v", err.Error()))
+        }
+
+        for i, col := range columns {
+            frame.Fields = append(frame.Fields, data.NewField(col, nil, []interface{}{values[i]}))
+        }
+    }
+
+    // Add the frame to the response
+    response.Frames = append(response.Frames, frame)
+
+    return response
 }
-
 // CheckHealth handles health checks sent from Grafana to the plugin.
 // The main use case for these health checks is the test button on the
 // datasource configuration page which allows users to verify that
 // a datasource is working as expected.
 func (d *Datasource) CheckHealth(_ context.Context, req *backend.CheckHealthRequest) (*backend.CheckHealthResult, error) {
-	res := &backend.CheckHealthResult{}
-	config, err := models.LoadPluginSettings(*req.PluginContext.DataSourceInstanceSettings)
+    err := d.db.Ping()
+    if err != nil {
+        return &backend.CheckHealthResult{
+            Status:  backend.HealthStatusError,
+            Message: fmt.Sprintf("Database connection failed: %v", err),
+        }, nil
+    }
 
-	if err != nil {
-		res.Status = backend.HealthStatusError
-		res.Message = "Unable to load settings"
-		return res, nil
-	}
-
-	if config.Secrets.ApiKey == "" {
-		res.Status = backend.HealthStatusError
-		res.Message = "API key is missing"
-		return res, nil
-	}
-
-	return &backend.CheckHealthResult{
-		Status:  backend.HealthStatusOk,
-		Message: "Data source is working",
-	}, nil
+    return &backend.CheckHealthResult{
+        Status:  backend.HealthStatusOk,
+        Message: "Database connection is healthy",
+    }, nil
 }
