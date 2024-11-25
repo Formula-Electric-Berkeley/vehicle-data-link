@@ -59,7 +59,7 @@ func NewDatasource(_ context.Context, settings backend.DataSourceInstanceSetting
         return nil, fmt.Errorf("password is empty")
     }
 
-    connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", 
+    connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable hostaddr=127.0.0.1", 
         host, port, user, password, dbName)
 
     db, err := sql.Open("postgres", connStr)
