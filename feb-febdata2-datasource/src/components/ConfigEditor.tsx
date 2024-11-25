@@ -19,7 +19,56 @@ export function ConfigEditor(props: Props) {
     });
   };
 
-  // Secure field (only sent to the backend)
+  const onHostChange = (event: ChangeEvent<HTMLInputElement>) => {
+    onOptionsChange({
+      ...options,
+      jsonData: {
+        ...jsonData,
+        host: event.target.value,
+      },
+    });
+  };
+
+  const onPortChange = (event: ChangeEvent<HTMLInputElement>) => {
+    onOptionsChange({
+      ...options,
+      jsonData: {
+        ...jsonData,
+        port: event.target.value,
+      },
+    });
+  };
+
+  const onDatabaseChange = (event: ChangeEvent<HTMLInputElement>) => {
+    onOptionsChange({
+      ...options,
+      jsonData: {
+        ...jsonData,
+        database: event.target.value,
+      },
+    });
+  };
+
+  const onUserChange = (event: ChangeEvent<HTMLInputElement>) => {
+    onOptionsChange({
+      ...options,
+      jsonData: {
+        ...jsonData,
+        user: event.target.value,
+      },
+    });
+  };
+
+  const onPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
+    onOptionsChange({
+      ...options,
+      secureJsonData: {
+        ...secureJsonData,
+        password: event.target.value,
+      },
+    });
+  };
+
   const onAPIKeyChange = (event: ChangeEvent<HTMLInputElement>) => {
     onOptionsChange({
       ...options,
@@ -43,6 +92,20 @@ export function ConfigEditor(props: Props) {
     });
   };
 
+  const onResetPassword = () => {
+    onOptionsChange({
+      ...options,
+      secureJsonFields: {
+        ...options.secureJsonFields,
+        password: false,
+      },
+      secureJsonData: {
+        ...options.secureJsonData,
+        password: '',
+      },
+    });
+  };
+
   return (
     <>
       <InlineField label="Path" labelWidth={14} interactive tooltip={'Json field returned to frontend'}>
@@ -54,6 +117,59 @@ export function ConfigEditor(props: Props) {
           width={40}
         />
       </InlineField>
+
+      <InlineField label="Host" labelWidth={14} interactive tooltip={'PostgreSQL host'}>
+        <Input
+          id="config-editor-host"
+          onChange={onHostChange}
+          value={jsonData.host}
+          placeholder="localhost"
+          width={40}
+        />
+      </InlineField>
+
+      <InlineField label="Port" labelWidth={14} interactive tooltip={'PostgreSQL port'}>
+        <Input
+          id="config-editor-port"
+          onChange={onPortChange}
+          value={jsonData.port}
+          placeholder="5432"
+          width={40}
+        />
+      </InlineField>
+
+      <InlineField label="Database" labelWidth={14} interactive tooltip={'Database name'}>
+        <Input
+          id="config-editor-database"
+          onChange={onDatabaseChange}
+          value={jsonData.database}
+          placeholder="your_database"
+          width={40}
+        />
+      </InlineField>
+
+      <InlineField label="User" labelWidth={14} interactive tooltip={'Database user'}>
+        <Input
+          id="config-editor-user"
+          onChange={onUserChange}
+          value={jsonData.user}
+          placeholder="postgres"
+          width={40}
+        />
+      </InlineField>
+
+      <InlineField label="Password" labelWidth={14} interactive tooltip={'Database password'}>
+        <SecretInput
+          id="config-editor-password"
+          isConfigured={secureJsonFields.password}
+          value={secureJsonData?.password}
+          placeholder="Enter database password"
+          width={40}
+          onChange={onPasswordChange}
+          onReset={onResetPassword} 
+        />
+      </InlineField>
+
       <InlineField label="API Key" labelWidth={14} interactive tooltip={'Secure json field (backend only)'}>
         <SecretInput
           required

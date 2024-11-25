@@ -30,21 +30,46 @@ func NewDatasource(_ context.Context, settings backend.DataSourceInstanceSetting
     var jsonData map[string]interface{}
     err := json.Unmarshal(settings.JSONData, &jsonData)
     if err != nil {
-        return nil, err
+        return nil, fmt.Errorf("failed to unmarshal JSONData: %w", err)
     }
 
-    host := jsonData["localhost"].(string)
-    port := jsonData["5432"].(string)
-    dbName := jsonData["telemetrydb"].(string)
-    user := jsonData["telemetryuser"].(string)
-    password := settings.DecryptedSecureJSONData["ball"]
+    // Add type assertion checks
+    host, ok := jsonData["host"].(string)
+    if !ok {
+        return nil, fmt.Errorf("host is not a string")
+    }
+    
+    port, ok := jsonData["port"].(string)
+    if !ok {
+        return nil, fmt.Errorf("port is not a string")
+    }
+    
+    dbName, ok := jsonData["database"].(string)
+    if !ok {
+        return nil, fmt.Errorf("database is not a string")
+    }
+    
+    user, ok := jsonData["user"].(string)
+    if !ok {
+        return nil, fmt.Errorf("user is not a string")
+    }
 
-    connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+    password := settings.DecryptedSecureJSONData["password"]
+    if password == "" {
+        return nil, fmt.Errorf("password is empty")
+    }
+
+    connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", 
         host, port, user, password, dbName)
 
     db, err := sql.Open("postgres", connStr)
     if err != nil {
-        return nil, err
+        return nil, fmt.Errorf("failed to open database: %w", err)
+    }
+
+    // Test the connection
+    if err := db.Ping(); err != nil {
+        return nil, fmt.Errorf("failed to ping database: %w", err)
     }
 
     return &Datasource{db: db}, nil

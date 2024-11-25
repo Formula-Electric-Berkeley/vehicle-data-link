@@ -24,6 +24,10 @@ export interface DataSourceResponse {
  */
 export interface MyDataSourceOptions extends DataSourceJsonData {
   path?: string;
+  host?: string;
+  port?: string;
+  database?: string;
+  user?: string;
 }
 
 /**
@@ -31,4 +35,5 @@ export interface MyDataSourceOptions extends DataSourceJsonData {
  */
 export interface MySecureJsonData {
   apiKey?: string;
+  password?: string;
 }

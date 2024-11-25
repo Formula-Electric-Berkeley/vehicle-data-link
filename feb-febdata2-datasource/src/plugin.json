@@ -24,5 +24,47 @@
   "dependencies": {
     "grafanaDependency": ">=10.4.0",
     "plugins": []
+  },
+  "jsonData": {
+    "host": {
+      "path": "host",
+      "name": "Host",
+      "description": "Database host",
+      "type": "string",
+      "required": true
+    },
+    "port": {
+      "path": "port",
+      "name": "Port",
+      "description": "Database port",
+      "type": "string",
+      "required": true,
+      "default": "5432"
+    },
+    "database": {
+      "path": "database",
+      "name": "Database",
+      "description": "Database name",
+      "type": "string",
+      "required": true
+    },
+    "user": {
+      "path": "user",
+      "name": "User",
+      "description": "Database user",
+      "type": "string",
+      "required": true
+    }
+  },
+  "secureJsonData": {
+    "password": {
+      "path": "password",
+      "name": "Password",
+      "description": "Database password",
+      "type": "string",
+      "required": true,
+      "secure": true
+    }
   }
+  
 }
