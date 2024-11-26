@@ -4,13 +4,18 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
+	"time"
+
 	//"time"
 
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/grafana/grafana-plugin-sdk-go/backend/instancemgmt"
 	"github.com/grafana/grafana-plugin-sdk-go/data"
+
 	//"github.com/feb/feb-data2/pkg/models"
 	"database/sql"
+
 	_ "github.com/lib/pq"
 )
 
@@ -59,10 +64,19 @@ func NewDatasource(_ context.Context, settings backend.DataSourceInstanceSetting
         return nil, fmt.Errorf("password is empty")
     }
 
-    connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable hostaddr=127.0.0.1", 
+    connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", 
         host, port, user, password, dbName)
+    
+    log.Printf("Attempting to connect with: host=%s port=%s user=%s dbname=%s sslmode=disable", host, port, user, dbName)
 
     db, err := sql.Open("postgres", connStr)
+
+    ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+    defer cancel()
+    if err := db.PingContext(ctx); err != nil {
+        return nil, fmt.Errorf("failed to ping database: %w", err)
+    }
+    
     if err != nil {
         return nil, fmt.Errorf("failed to open database: %w", err)
     }
