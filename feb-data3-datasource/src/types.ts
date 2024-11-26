@@ -22,13 +22,29 @@ export interface DataSourceResponse {
 /**
  * These are options configured for each DataSource instance
  */
-export interface MyDataSourceOptions extends DataSourceJsonData {
-  path?: string;
-}
+//export interface MyDataSourceOptions extends DataSourceJsonData {
+  //path?: string;
+//}
 
 /**
  * Value that is used in the backend, but never sent over HTTP to the frontend
  */
 export interface MySecureJsonData {
   apiKey?: string;
+}
+
+export interface MyQuery extends DataQuery {
+  queryText?: string;
+  constant: number;
+  frequency: number; // New property for controlling frequency
+}
+
+export const defaultQuery: Partial<MyQuery> = {
+  constant: 6.5,
+  frequency: 1.0, // Set a default frequency value
+};
+
+export interface MyDataSourceOptions extends DataSourceJsonData {
+  path?: string; // Example for database path
+  resolution?: number; // New property for resolution
 }

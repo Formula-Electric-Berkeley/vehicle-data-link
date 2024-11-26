@@ -17,7 +17,26 @@ export function QueryEditor({ query, onChange, onRunQuery }: Props) {
     onRunQuery();
   };
 
-  const { queryText, constant } = query;
+  const onFrequencyChange = (event: ChangeEvent<HTMLInputElement>) => {
+    onChange({ ...query, frequency: parseFloat(event.target.value) });
+    onRunQuery(); // Trigger a new query after change
+};
+
+  const { queryText, constant, frequency } = query;
+
+<InlineField label="Frequency" labelWidth={16}>
+    <Input onChange={onFrequencyChange} value={frequency || ''} />
+</InlineField>;
+
+<InlineField label="SQL Query" labelWidth={16} grow>
+  <Input
+    id="query-editor-sql"
+    onChange={onQueryTextChange}
+    value={queryText || ''}
+    placeholder="Enter SQL query"
+    rows={4}
+  />
+</InlineField>
 
   return (
     <Stack gap={0}>
